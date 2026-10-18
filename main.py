@@ -22,7 +22,13 @@ def userInput():
     return userChoice, userMessage
 
 def encodeMessage(userMessage):
-    return 0
+    userMessage = userMessage.lower()
+    word = ""
+    for letter in userMessage:
+        if letter.isspace():
+            continue
+        word += format(ord(letter) - 97, '05b').replace('1', 'b').replace('0', 'a') + " "
+    return word
 
 def decodeMessage(userMessage):
     return 0
@@ -35,8 +41,11 @@ try:
         userChoice, userMessage = userInput()
 
         if (userChoice == "ENCODE"):
+            if not isinstance(userMessage, str) or not userMessage.replace(" ", "").isalpha():
+                print("Numbers and symbols cannot be encoded.")
+                continue
             encryptedMessage = encodeMessage(userMessage)
-            print ("\n" + "Encrypted Message: " + str(encryptedMessage) + "\n")
+            print ("\n" + "Encrypted Message: " + encryptedMessage + "\n")
 
         elif (userChoice == "DECODE"):
             decryptedMessage = decodeMessage(userMessage)
